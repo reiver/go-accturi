@@ -2,9 +2,18 @@ package accturi
 
 import (
 	"strings"
+	"unsafe"
 )
 
-// IsAcctURIString returns true is `value` is a acct-uri, and returns false otherwise.
+// IsAcctURIBytes returns true if `value` is a acct-uri, and returns false otherwise.
+func IsAcctURIBytes(value []byte) bool {
+	var str string = unsafe.String(unsafe.SliceData(value), len(value))
+
+	return IsAcctURIString(str)
+}
+
+
+// IsAcctURIString returns true if `value` is a acct-uri, and returns false otherwise.
 func IsAcctURIString(value string) bool {
 
 	if !strings.HasPrefix(value, prefix) {
